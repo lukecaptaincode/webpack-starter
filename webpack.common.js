@@ -7,6 +7,7 @@ const glob = require('glob');
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const smp = new SpeedMeasurePlugin();
 
+
 module.exports = smp.wrap({
     entry: './src/index.ts',
     resolve: {
@@ -51,6 +52,5 @@ module.exports = smp.wrap({
         new PurgecssPlugin({
             paths: glob.sync(path + `/src/**/*`, {nodir: true})
         }),
-
     ]
 });
