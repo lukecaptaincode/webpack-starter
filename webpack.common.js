@@ -2,8 +2,12 @@ const path = require('path');
 //Plugins
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const PurgecssPlugin = require('purgecss-webpack-plugin');
+const glob = require('glob');
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
 
-module.exports = {
+module.exports = smp.wrap({
     entry: './src/index.ts',
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
@@ -44,6 +48,9 @@ module.exports = {
                 template: './src/index.html',
             }
         ),
+        new PurgecssPlugin({
+            paths: glob.sync(path + `/src/**/*`, {nodir: true})
+        }),
 
     ]
-};
+});
